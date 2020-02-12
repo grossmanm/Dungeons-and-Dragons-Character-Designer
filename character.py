@@ -224,19 +224,84 @@ class Character:
             self.languages.append("Common")
             self.languages.append("Gnomish")
             self.traits.append("Artificer's Lore: Whenever you make an Intelligence (History) check related to magic items, alchemical objects, or technological devices, you can add twice your proficiency bonus.")
+            self.traits.append("Tinker: You have proficiency with artisan's tools (tinker's tool). Using those tools, you can spend 1 hour and 10 gp worth of materials to construct a Tiny clockword device (AC 5, 1 hp). \
+            The device ceases to functiona fter 24 hours (unless you spend 1 hour repairing it to keep the device functioning), or when you use your action to dismantle it; at that time, you can reclaim the materials used \
+            to create it. You can have up to three such devices active at a time")
+
+        elif self.race.lower() == "half-elf":
+            self.char += 2
+            valid_choice = False
+            while not valid_choice:
+                print("what ability score would you like to increase by 1? str, dex, con, int, wis, char")
+                stat_inc = input()
+                if stat_inc == "str":
+                    self.str += 1
+                    valid_choice = True
+                elif stat_inc == "dex":
+                    self.dex += 1
+                    valid_choice = True
+                elif stat_inc == "con":
+                    self.con += 1
+                    valid_choice = True
+                elif stat_inc == "int":
+                    self.int += 1
+                    valid_choice = True
+                elif stat_inc == "wis":
+                    self.wis += 1
+                    valid_choice = True
+                elif stat_inc == "char":
+                    self.char += 1
+                    valid_choice = True
+                else:
+                    valid_choice = False
+            self.speed = 30
+            self.traits.append("Darkvision: Thanks to your elf blood, you have superior vision in dark and dim comditions. You can see in dim light within 60 feet of you as if it were bright light. You can't discern color in darkness, only shades of gray.")
+            self.traits.append("Fey Ancestry: You have advantage on saving throws against being charmed, and magic can't put you to sleep")
+            ### GAIN PROFICIENCY IN TWO SKILLS SET UP DROP DOWN FOR THIS ####
+            self.languages.append("Common")
+            self.languages.append("Elvish")
+            ### ADD LANGUAGES TABLE ###
+
+        elif self.race.lower() == "half-orc":
+            self.str += 2
+            self.con += 1
+            self.speed = 30
+            self.traits.append("Darkvision: Thanks to your orc blood, you have superior vision in dark and dim comditions. You can see in dim light within 60 feet of you as if it were bright light. You can't discern color in darkness, only shades of gray.")
+            self.intimidation.update_proficiency(True)
+            self.traits.append("Relentless Endurance: When you are reduced to 0 hit pooints but not killed outright, you can drop to 1 hit point instead. You can't use this feature again utnil you finish a a long rest.")
+            self.traits.append("Savage Attacks: When you score a critical hit with a melee weapon attack, you can roll one of the weapon's damage dice one additional time and add it to the extra damage of the critical hit.")
+            self.languages.append("Common")
+            self.languages.append("Orc")
+
+        elif self.race.lower() == "tiefling":
+            self.int += 1
+            self.char += 2
+            self.speed = 30
+            self.traits.append("Darkvision: Thanks to your infernal heritage, you have superior vision in dark and dim comditions. You can see in dim light within 60 feet of you as if it were bright light. You can't discern color in darkness, only shades of gray.")
+            self.traits.append("Hellish Resistance: You have resistance to fire damage")
+            ### ADD CANTRIP ABILITIES###
+            self.languages.append("Common")
+            self.languages.append("Infernal")
+
     def set_age(self):
         if self.race.lower() == "hill dwarf" or "mountain dwarf":
-            print("Dwarves mature at the same rate as humans, but they're considered young until they reach the age of 50. On Average, they live about 350 years. What age is your dwarf")
+            print("Dwarves mature at the same rate as humans, but they're considered young until they reach the age of 50. On Average, they live about 350 years. What is your age?")
         elif self.race.lower() == "high elf" or "wood elf" or "drow":
-            print("A typical elf claims adulthood and an adult name around the age of 100 and can live to be 750 years old. What age is your elf?")
+            print("A typical elf claims adulthood and an adult name around the age of 100 and can live to be 750 years old. What is your age?")
         elif self.race.lower() == "lightfoot halfling" or "stout halfling":
-            print("A halfling reaches adulthood at age of 20 and generally lives into the middle of his or her second century. What age is your halfling?")
+            print("A halfling reaches adulthood at age of 20 and generally lives into the middle of his or her second century. What is your age?")
         elif self.race.lower() == "human":
             print("Humans reach adulthood in their late teens and live less than a century. What is your age?")
         elif self.race.lower() == "dragonborn":
             print("Dragonborn reach adulthood by 15. They live to be around 80. What is your age?")
         elif self.race.lower() == "rock gnome" or "forest gnome":
             print("Gnomes reach adulthood by about 40 and can live 350 to almost 500 years. What is your age?")
+        elif self.race.lower() == "half-elf":
+            print("Half-Elves mature at the same rate as humans do and reach adulthood around the age of 20. They live much longer than humans, however, often exceeding 180 years. What is your age?")
+        elif self.race.lower() == "half-orc":
+            print("Half-orcs mature a little faster than humans, reaching adulthood around age 14. They age noticeably faster and rarely live longer than 75 years. What is your age?")
+        elif self.race.lower() == "tiefling":
+            print("Tieflings mature at the same rate as humans, reaching adulthood around the age of 20. They live a little longer than humans. What is your age?")
 
     def set_height(self):
         if self.race.lower() == "hill dwarf" or "mountain dwarf":
@@ -251,7 +316,12 @@ class Character:
             print("Dragonborn stand well over 6 feet tall. Your size is Medium. What is your height?")
         elif self.race.lower() == "rock gnome" or "forest gnome":
             print("Gnomes are between 3 and 4 feet tall. Your size is Small. What is your height?")
-
+        elif self.race.lower() == "half-elf":
+            print("Half-Elves are about the same size as humans ranging from 5 to 6 feet tall. Your size is Medium. What is your height?")
+        elif self.race.lower() == "half-orc":
+            print("Half-orcs are somewhat larger and bulkier than humans, and they range from 5 to well over 6 feet tall. Your size is medium. What is your height?")
+        elif self.race.lower() == "tiefling":
+            print("Tieflings are about the same size and build as humans standing barely 5 feet to well over 6 feet. Your size is Medium. What is your height?")
 
     def set_weight(self):
         if self.race.lower() == "hill dwarf" or "mountain dwarf":
@@ -266,3 +336,9 @@ class Character:
             print("Dragonborn average almost 250 pounds. What is your weight?")
         elif self.race.lower() == "rock gnome" or "forest gnome":
             print("Gnomes average about 40 pounds. What is your weight?")
+        elif self.race.lower() == "half-elf":
+            print("Half-Elves vary in build but average about 110 pounds. What is your weight?")
+        elif self.race.lower() == "half-orc":
+            print("Half-Orcs vary in build but average about 175 pounds. What is your weight?")
+        elif self.race.lower() == "tiefling":
+            print("Tieflings vary widely in build but average about 110 pounds. What is your weight?")
