@@ -1,4 +1,5 @@
 from proficiencies import Score
+import random
 
 class Character:
     """
@@ -25,20 +26,35 @@ class Character:
         self.char = char
         self.race = race
         self.class = class
+        self.hit_dice = 0
+        self.hp = 0
+        self.initiative = 0
         self.dragon_type = None
-        self.lvl = 1
+        self.lvl = 0
         self.prof_bonus = 0
         self.speed = 0
         self.age = 0
         self.height = 0
         self.weight = 0
         self.hp_mod = 0
+        self.rages = 0
+        self.rage_bonus = 0
         self.traits = []
         self.languages = []
-        self.set_age()
-        self.set_height()
-        self.set_weight()
-        self.set_race()
+        self.proficiencies = []
+        self.AC = 10 + self.dex
+        self.cantrips = 0
+        self.known_spells = 0
+        self.lvl1s = 0
+        self.lvl2s = 0
+        self.lvl3s = 0
+        self.lvl4s = 0
+        self.lvl5s = 0
+        self.lvl6s = 0
+        self.lvl7s = 0
+        self.lvl8s = 0
+        self.lvl9s = 0
+
 
         # intialize saves amd skills
         self.str_save = Score(self.str, self.prof_bonus)
@@ -282,6 +298,155 @@ class Character:
             ### ADD CANTRIP ABILITIES###
             self.languages.append("Common")
             self.languages.append("Infernal")
+
+    def set_class(lvl=1):
+        if self.class.lower() == "barbarian":
+            # autimatically increase hp
+            for i in range(lvl-self.lvl):
+                self.hp += random.randint(1,12) + self.con + self.hp_mod
+            self.str_save.update_proficiency(True)
+            self.con_save.update_proficiency(True)
+            self.proficiencies.append("Light Armor")
+            self.proficiencies.append("Medium Armor")
+            self.proficiencies.appemd("Shields")
+            self.proficiencies.append("Simple weapons")
+            self.proficiencies.append("Martial weapons")
+            if lvl>=1 and self.lvl<1:
+                self.traits.append("Rage")
+                self.traits.append("Unarmored Defense")
+                self.AC += self.con
+                self.prof_bonus = 2
+                self.rages = 2
+                self.rage_bonus = 2
+                ### CHOOSE PROFICIENCIES ###
+            if lvl>=2 and self.lvl<2:
+                self.traits.append("Reckless Attack")
+                self.traits.append("Danger sense")
+            if lvl>=3 and self.lvl<3:
+                self.traits.append("Primal path")
+                self.rages = 3
+            if lvl>=4 and self.lvl<4:
+                ### Increase ability Score ###
+                print("choose an ability score to improve")
+            if lvl>=5 and self.lvl<5:
+                self.prof_bonus = 3
+                self.traits.append("Extra attack")
+                self.traits.append("Fast movement")
+            if lvl>=6 and self.lvl<6:
+                ### PICK A PATH ###
+                self.rages = 4
+            if lvl>=7 and self.lvl<7:
+                self.traits.append("Feral Instinct")
+            if lvl>=8 and self.lvl<8:
+                ### INCREASE ABILITY SCORE ###
+                print("choose an ability score to improve")
+            if lvl>=9 and self.lvl<9:
+                self.prof_bonus = 4
+                self.traits.append("Brutal Critical")
+                self.rage_bonus = 3
+            if lvl>=10 and self.lvl<10:
+                ### CHOOSE PATH FEATURE ###
+                print("Choose a path feature")
+            if lvl>=11 and self.lvl<11:
+                self.traits.append("Relentless Rage")
+            if lvl>=12 and self.lvl<12:
+                ### INCREASE ABILITY SCORE ###
+                print("choose an ability score to improve")
+                self.rages = 5
+            if lvl>=13 and self.lvl<13:
+                self.prof_bonus = 5
+                ### INCREASE TO BRUTAL CRITICAL ###
+            if lvl>=14 and self.lvl<14:
+                ### CHOOSE PATH FEATURE ###
+                print("Choose a path feature")
+            if lvl>=15 and self.lvl<15:
+                self.traits.append("Persistant Rage")
+            if lvl>=16 and self.lvl<16:
+                ### INCREASE ABILITY SCORE ###
+                print("choose an ability score to improve")
+                self.rage_bonus = 4
+            if lvl>=17 and self.lvl<17:
+                self.prof_bonus = 6
+                self.rage = 6
+                ### INCREASE TO BRUTAL CRITICAL ###
+            if lvl>=18 and self.lvl<18:
+                self.traits.append("Indomitable Might")
+            if lvl>=19 and self.lvl<19:
+                ### INCREASE ABILITY SCORE ###
+                print("choose an ability score to improve")
+            if lvl>=20 and self.lvl<20:
+                self.traits.append("Primal champion")
+                self.str += 4
+                self.con += 4
+                self.rages = "unlimited"
+            self.lvl = lvl
+
+        elif self.class.lower() == "bard":
+            # autimatically increase hp
+            for i in range(lvl-self.lvl):
+                self.hp += random.randint(1,8) + self.con + self.hp_mod
+            self.proficiencies.append("Light Armor")
+            self.proficiencies.append("Simple weapons")
+            self.proficiencies.append("Hand crossbows")
+            self.proficiencies.append("Longswords")
+            self.proficiencies.append("Rapiers")
+            self.proficiencies.append("Shortswords")
+            ### CHOOSE THREE MUSCIAL INSTRUMENTS TO GAIN PROFICIENCY IN ###
+            if lvl>=1 and self.lvl<1:
+                self.prof_bonus = 2
+                ### GAIN SPELLCASTING ###
+                self.traits.append("Bardic Inspiration")
+                self.cantrips = 2
+                self.known_spells = 4
+                self.lvl1s = 2
+            if lvl>=2 and self.lvl<2:
+                self.traits.append("Jack of All Trades")
+                self.traits.append("Song of Rest")
+                self.known_spells = 5
+                self.lvl1s = 3
+            if lvl>=3 and self.lvl<3:
+                ### PICK A BARD COLLEGE
+                ### CHOOSE TWO SKILLS TO GAIN PROFICIENCY IN ###
+                self.known_spells = 6
+                self.lvl1s = 4
+                slef.lvl2s = 2
+            if lvl>=4 and self.lvl<4:
+                ### INCREASE ABILITY SCORE ###
+                print("choose an ability score to improve")
+                self.cantrips = 3
+                self.known_spells = 7
+                self.lvl2s = 3
+            if lvl>=5 and self.lvl<5:
+                self.prof_bonus = 3
+                self.traits.append("Font of Inspiration")
+                self.known_spells = 8
+                self.lvl3s = 2
+            if lvl>=6 and self.lvl<6:
+                self.traits.append("Countercharm")
+                ### BARD COLLEGE FEATURE ###
+                self.known_spells = 9
+                self.lvl3s = 3
+            if lvl>=7 and self.lvl<7:
+                self.known_spells = 10
+                self.lvl4s = 1
+            if lvl>=8 and self.lvl<8:
+                ### INCREASE ABILITY SCORE ###
+                print("choose an ability score to improve")
+                self.known_spells = 11
+                self.lvl4s = 2
+            if lvl>=9 and self.lvl<9:
+                self.prof_bonus = 4
+                self.known_spells = 12
+                self.lvl4s = 3
+                self.lvl5s = 1
+            if lvl>=10 and self.lvl<10:
+                ### CHOOSE TWO SKILLS TO GAIN PROFICIENCY IN ###
+                ### CHOOSE TWO SPELLS OF ANY KIND TO LEARN ###
+                self.cantrips = 4
+                self.known_spells = 14
+                self.lvl5s = 2
+
+
 
     def set_age(self):
         if self.race.lower() == "hill dwarf" or "mountain dwarf":
